@@ -7,12 +7,14 @@ app.use(require('./middleware/headers'));
 
 
 
+
 const controllers = require("./controllers");
 
 app.use(Express.json())
 app.use("/user", controllers.userController);
-app.use("/log", controllers.logController);
 
+app.use(require('./middleware/validate'));
+app.use("/log", controllers.logController);
 dbConnection.authenticate()
 .then(() => dbConnection.sync())
 .then(() => {

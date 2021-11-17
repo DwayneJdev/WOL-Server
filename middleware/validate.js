@@ -19,7 +19,7 @@ const validateJWT = async (req, res, next) => {
         )
         :undefined;
 
-        console.log("payload -->", payload)
+        // console.log("payload -->", payload)
        
         if (payload) {
             let foundUser = await User.findOne({ where: { owner_id: payload.owner_id } });
@@ -27,7 +27,7 @@ const validateJWT = async (req, res, next) => {
 
             if (foundUser) {
                 console.log("request -->", req)
-                req.user = foundUser;
+                req.User = foundUser;
                 next();
             }  else {
                 res.status(400).send({ message: "Not Authorization" });

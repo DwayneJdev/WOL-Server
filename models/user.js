@@ -11,6 +11,11 @@ const User = db.define("user", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    owner_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true
+    }
 });
 
 module.exports = User; 

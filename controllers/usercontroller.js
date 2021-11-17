@@ -7,7 +7,7 @@ const { UniqueConstraintError } = require("sequelize/lib/errors");
 const jwt = require("jsonwebtoken");
 
 
-router.post('/user/register', async (req, res) => {
+router.post('/register', async (req, res) => {
     let { username, password } = req.body.user;
     // console.log(username, password)
     try {
@@ -41,10 +41,11 @@ router.post('/user/register', async (req, res) => {
 
 });
 
-router.post("/user/login", async (req, res) => {
+router.post("/login", async (req, res) => {
     let { username, password } = req.body.user;
 
     try {
+        console.log(username, password)
         const loginUser = await User.findOne({
             where: {
                 username: username,
@@ -58,7 +59,7 @@ router.post("/user/login", async (req, res) => {
 
             if (passwordComparison) {
 
-                let token = jwt.sign({ username: username, password: password }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
+                let token = jwt.sign({ owner_id: loginUser.owner_id  }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
                 res.status(200).json({
                     user: loginUser,
                     message: "user login success!",

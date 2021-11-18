@@ -9,14 +9,14 @@ router.get('/practice', validateJWT, (req, res) => {
 
 // ******* Create workout log ********
 
-router.post("/log/", validateJWT, async (req, res) => {
-    const { description, definition, result } = req.body.log;
-    const { owner_id } = req.user;
+router.post("/", validateJWT, async (req, res) => {
+    const { description, definition, result, owner_id } = req.body.log;
+    const { id } = req.user;
     const logEntry = {
         description,
          definition,
           result,
-          owner_id
+          owner_id: id
     }
     try {
         const newLog = await LogModel.create(logEntry);
@@ -24,7 +24,7 @@ router.post("/log/", validateJWT, async (req, res) => {
     } catch (err) {
         res.status(500).json({error: err});
     }
-    LogModel.create(logEntry)
+    
 });
 
 router.get('/about', (req, res) => {
@@ -45,6 +45,7 @@ router.get("/log/", validateJWT, async (req, res) => {
 // ***** Get Logs By User ****
 
 router.get("/log/:id", validateJWT, async (req, res) => {
+    
     const { id } = req.user;
     try {
         const userLog = await LogModel.findAll({

@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+let jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
 const validateJWT = async (req, res, next) => {
@@ -22,7 +22,7 @@ const validateJWT = async (req, res, next) => {
         // console.log("payload -->", payload)
        
         if (payload) {
-            let foundUser = await User.findOne({ where: { owner_id: payload.owner_id } });
+            let foundUser = await User.findOne({ where: { id: payload.id } });
             console.log("foundUser -->", foundUser);
 
             if (foundUser) {

@@ -10,12 +10,8 @@ const User = db.define("user", {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    // owner_id: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     unique: true
-    // }
+    }
+  
 });
 
 module.exports = User; 

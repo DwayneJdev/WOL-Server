@@ -17,7 +17,7 @@ app.use("/log", controllers.logController);
 
 
 dbConnection.authenticate()
-.then(() => dbConnection.sync())
+.then(() => dbConnection.sync())           //.then(() => dbConnection.sync({force: true})) Deletes all tables
 .then(() => {
     app.listen(3000, () => {
     console.log(`[Server]: App is listening on 3000.`);

@@ -27,7 +27,7 @@ const validateJWT = async (req, res, next) => {
 
             if (foundUser) {
                 console.log("request -->", req)
-                req.User = foundUser;
+                req.user = foundUser;
                 next();
             }  else {
                 res.status(400).send({ message: "Not Authorization" });

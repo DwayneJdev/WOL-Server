@@ -1,7 +1,7 @@
 const Express = require("express");
 const router = Express.Router();
 let validateJWT = require("../middleware/validate");
-const { LogModel} = require("../models");
+    const  {LogModel} = require("../models");
 
 router.get('/practice', validateJWT, (req, res) => {
     res.send('Hey!! This is a practice route!')
@@ -10,12 +10,13 @@ router.get('/practice', validateJWT, (req, res) => {
 // ******* Create workout log ********
 
 router.post("/", validateJWT, async (req, res) => {
-    const { description, definition, result, owner_id } = req.body.log;
+    const { description, definition, results } = req.body.log;
+    console.log("HELLP",req.user)
     const { id } = req.user;
     const logEntry = {
         description,
          definition,
-          result,
+          results,
           owner_id: id
     }
     try {
@@ -77,13 +78,13 @@ router.get("/log/:id", validateJWT, async (req, res) => {
 
 router.put("/update/log/:id", validateJWT, async (req, res) => {
     const { description, definition, result } = req.body.log;
-    const logId = req.params.entryId;
+    const logId = req.params.id;
     const userId = req.user.id;
 
     const query = {
         where: {
             id: logId,
-            owner: userId
+            owner_id: userId
         }
     };
 
@@ -104,14 +105,14 @@ router.put("/update/log/:id", validateJWT, async (req, res) => {
 // ***** DELETE A Log ****
 
 router.delete("/delete/:id", validateJWT, async (req, res) => {
-    const ownerId = req.user.id;
+    const userId = req.user.id;
     const LogId = req.params.id;
 
     try {
         const query = {
             where: {
                 id: LogId,
-                owner: ownerId
+                owner_id: userId
             }
         };
 
